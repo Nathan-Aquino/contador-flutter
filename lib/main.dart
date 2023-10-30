@@ -18,11 +18,11 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static void increment() {
+  void increment() {
     print("increment");
   }
 
-  static void decrement() {
+  void decrement() {
     print("decrement");
   }
 
