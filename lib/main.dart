@@ -10,86 +10,109 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  int count = 0;
+
   void increment() {
-    print("increment");
+    setState(() {
+      count++;
+    });
   }
 
   void decrement() {
-    print("decrement");
+    setState(() {
+      count--;
+    });
   }
+
+  bool get isZero => count == 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text(
-            "Contador",
-            style: TextStyle(
-              fontSize: 35,
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/imagens/fundo.png'),
+            fit: BoxFit.cover
           ),
-          const Padding(
-            padding: EdgeInsets.all(32),
-            child: Text(
-              '0',
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              "Contador",
               style: TextStyle(
-                fontSize: 100,
+                fontSize: 35,
               ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextButton(
-                onPressed: increment,
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  fixedSize: const Size(50, 50),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7)),
+            Padding(
+              padding: EdgeInsets.all(32),
+              child: Text(
+                count.toString(),
+                style: const TextStyle(
+                  fontSize: 100,
                 ),
-                child: const Text(
-                  "+",
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  onPressed: increment,
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    fixedSize: const Size(50, 50),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7)),
+                  ),
+                  child: const Text(
+                    "+",
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
-              TextButton(
-                onPressed: decrement,
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.black,
-                  fixedSize: const Size(50, 50),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(7)),
+                const SizedBox(
+                  width: 25,
                 ),
-                child: const Text(
-                  "-",
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white,
+                TextButton(
+                  onPressed: isZero? null : decrement,
+                  style: TextButton.styleFrom(
+                    backgroundColor: isZero? Colors.black.withOpacity(0.2) : Colors.black,
+                    fixedSize: const Size(50, 50),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7)),
+                  ),
+                  child: const Text(
+                    "-",
+                    style: TextStyle(
+                      fontSize: 28,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
